@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTN Nigeria: CDR Regulatory Landscape</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Palette: "Deep Blue Tech"
+         Primary: #1e3a8a (Blue-900)
+         Secondary: #06b6d4 (Cyan-500)
+         Accent: #f59e0b (Amber-500)
+         Background: #f3f4f6 (Gray-100)
+         Surface: #ffffff
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1f2937; }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        /* Custom Timeline Styles */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+        }
+
+        /* Flowchart Styles */
+        .flow-arrow::after {
+            content: '▼';
+            font-size: 1.2rem;
+            color: #9ca3af;
+            display: block;
+            text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+    <!-- 
+        Source Material Analysis:
+        Topic: MTN Nigeria CDR Regulation.
+        Key Authorities: NCC (Regulator), NDPC (Privacy), Security Agencies (Access).
+        Key Laws: Cybercrimes Act 2015 (Retention), NDPA 2023 (Privacy), NCA 2003 (General).
+        Narrative: Define Landscape -> Timelines -> Retention Rules -> Access Protocols -> Risk Assessment.
+        
+        Chart Choices:
+        1. CDR Composition (Doughnut) -> Goal: Inform/Composition.
+        2. Retention Mandates (Bar) -> Goal: Compare/Time.
+        3. Compliance Risk (Radar) -> Goal: Relationships/Assessment.
+        4. Timeline (HTML/CSS) -> Goal: Change/History.
+        5. Access Flow (HTML/CSS) -> Goal: Organize/Process.
+        
+        NO SVG USED. NO MERMAID USED.
+    -->
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-blue-900 text-white py-12 px-4 shadow-lg">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Regulatory Landscape: CDRs</h1>
+            <p class="text-xl md:text-2xl text-cyan-400 font-light">Call Detail Records Compliance for MTN Nigeria</p>
+            <div class="mt-8 flex justify-center space-x-4">
+                <div class="px-4 py-2 bg-blue-800 rounded-lg border border-blue-700">
+                    <span class="block text-2xl font-bold text-amber-500">2 Years</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-300">Mandatory Retention</span>
+                </div>
+                <div class="px-4 py-2 bg-blue-800 rounded-lg border border-blue-700">
+                    <span class="block text-2xl font-bold text-cyan-400">Section 38</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-300">Cybercrimes Act</span>
+                </div>
+                <div class="px-4 py-2 bg-blue-800 rounded-lg border border-blue-700">
+                    <span class="block text-2xl font-bold text-white">NDPA</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-300">Data Privacy 2023</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- INTRO SECTION -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-blue-900 mb-6 border-l-8 border-amber-500 pl-4">The Strategic Importance of CDRs</h2>
+                <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                    For MTN Nigeria, Call Detail Records (CDRs) are more than just billing data; they are a critical national asset regulated by a complex web of laws. A CDR contains metadata about a communication session—identities, duration, and location—without revealing the content of the conversation.
+                </p>
+                <p class="text-gray-600 mb-6">
+                    Navigating this landscape requires balancing the <strong>mandatory retention</strong> for national security against the <strong>data minimization</strong> principles of modern privacy laws.
+                </p>
+                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-cyan-500">
+                    <h3 class="font-bold text-lg mb-2 text-gray-800">What constitutes a CDR?</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>A-Party (Caller) & B-Party (Receiver) Numbers</li>
+                        <li>Date & Time of Call</li>
+                        <li>Duration of Call</li>
+                        <li>Cell ID (Location Data)</li>
+                        <li>IMSI / IMEI (Device Identifiers)</li>
+                        <li>Call Type (Voice, SMS, Data)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- CHART: CDR Composition -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold text-center text-gray-800 mb-4">Anatomy of a CDR Data Point</h3>
+                <p class="text-sm text-center text-gray-500 mb-6">Breakdown of data fields tracked for compliance.</p>
+                <div class="chart-container">
+                    <canvas id="cdrCompositionChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-gray-400 mt-4">Source: Telecom Standards (3GPP/ETSI)</p>
+            </div>
+        </section>
+
+        <!-- REGULATORY AUTHORITIES -->
+        <section>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">The Regulatory Triad</h2>
+                <p class="max-w-2xl mx-auto text-gray-600">MTN's obligations are monitored by three primary pillars of authority in Nigeria.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Authority 1 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <div class="bg-blue-900 py-4 px-6">
+                        <h3 class="text-white font-bold text-xl">NCC</h3>
+                        <p class="text-cyan-400 text-sm">Nigerian Communications Commission</p>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-gray-800 mb-2">Role: Primary Regulator</h4>
+                        <p class="text-gray-600 text-sm mb-4">Sets technical standards, QoS KPIs, and issues the operating license. Enforces the Consumer Code of Practice.</p>
+                        <ul class="text-sm text-gray-600 space-y-2 border-t pt-4">
+                            <li class="flex items-start"><span class="text-amber-500 mr-2">●</span> NCA 2003</li>
+                            <li class="flex items-start"><span class="text-amber-500 mr-2">●</span> Registration of Subscribers Regs</li>
+                            <li class="flex items-start"><span class="text-amber-500 mr-2">●</span> Lawful Interception Guidelines</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Authority 2 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <div class="bg-emerald-600 py-4 px-6">
+                        <h3 class="text-white font-bold text-xl">Security Agencies</h3>
+                        <p class="text-emerald-100 text-sm">NSA / DSS / Police / EFCC</p>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-gray-800 mb-2">Role: Enforcement & Security</h4>
+                        <p class="text-gray-600 text-sm mb-4">Require access to CDRs for criminal investigations and national security intelligence.</p>
+                        <ul class="text-sm text-gray-600 space-y-2 border-t pt-4">
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2">●</span> Cybercrimes Act 2015</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2">●</span> Terrorism (Prevention) Act</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2">●</span> Mutual Assistance in Criminal Matters</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Authority 3 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <div class="bg-indigo-600 py-4 px-6">
+                        <h3 class="text-white font-bold text-xl">NDPC</h3>
+                        <p class="text-indigo-200 text-sm">Nigeria Data Protection Commission</p>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-gray-800 mb-2">Role: Privacy Guardian</h4>
+                        <p class="text-gray-600 text-sm mb-4">Ensures CDRs are not misused and that subscriber privacy rights are respected.</p>
+                        <ul class="text-sm text-gray-600 space-y-2 border-t pt-4">
+                            <li class="flex items-start"><span class="text-indigo-500 mr-2">●</span> NDPA 2023</li>
+                            <li class="flex items-start"><span class="text-indigo-500 mr-2">●</span> NDPR 2019</li>
+                            <li class="flex items-start"><span class="text-indigo-500 mr-2">●</span> Data Breach Reporting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-blue-900 mb-8 border-l-8 border-amber-500 pl-4">Legislative Evolution</h2>
+            <p class="mb-8 text-gray-600">The rules governing CDRs have evolved from basic telecommunications management to strict cybercrime prevention and data privacy protocols.</p>
+
+            <div class="relative">
+                <div class="timeline-line md:block hidden"></div>
+                
+                <div class="space-y-8">
+                    <!-- Event 1 -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="md:text-right">
+                            <h3 class="text-2xl font-bold text-blue-800">2003</h3>
+                            <p class="text-lg font-semibold text-gray-700">Nigerian Communications Act (NCA)</p>
+                        </div>
+                        <div class="hidden md:flex justify-center items-center">
+                            <div class="w-4 h-4 bg-amber-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-800 shadow-sm">
+                            <p class="text-sm text-gray-600">Established the NCC and the basic framework for telecommunications regulation, including the power to request information from operators.</p>
+                        </div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="md:order-3"> <!-- Swap order for zigzag -->
+                            <h3 class="text-2xl font-bold text-emerald-600">2011</h3>
+                            <p class="text-lg font-semibold text-gray-700">Registration of Telephone Subscribers</p>
+                        </div>
+                        <div class="hidden md:flex justify-center items-center md:order-2">
+                            <div class="w-4 h-4 bg-amber-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-emerald-600 shadow-sm md:text-right md:order-1">
+                            <p class="text-sm text-gray-600">Mandated the linking of biometric data to SIM cards. Established the central database, making CDRs personally identifiable and thus more sensitive.</p>
+                        </div>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="md:text-right">
+                            <h3 class="text-2xl font-bold text-red-600">2015</h3>
+                            <p class="text-lg font-semibold text-gray-700">Cybercrimes Act</p>
+                        </div>
+                        <div class="hidden md:flex justify-center items-center">
+                            <div class="w-4 h-4 bg-amber-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-red-600 shadow-sm">
+                            <p class="text-sm text-gray-600 font-bold">CRITICAL FOR CDRs:</p>
+                            <p class="text-sm text-gray-600">Section 38 explicitly mandates service providers to retain traffic data (CDRs) and subscriber information for a minimum of <span class="text-red-600 font-bold">2 years</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Event 4 -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="md:order-3">
+                            <h3 class="text-2xl font-bold text-indigo-600">2023</h3>
+                            <p class="text-lg font-semibold text-gray-700">Nigeria Data Protection Act (NDPA)</p>
+                        </div>
+                        <div class="hidden md:flex justify-center items-center md:order-2">
+                            <div class="w-4 h-4 bg-amber-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-indigo-600 shadow-sm md:text-right md:order-1">
+                            <p class="text-sm text-gray-600">Replaced the NDPR. Enforces data minimization and security. Requires that retained CDRs are secured against breaches and only accessed lawfully.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RETENTION CHART -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-blue-900 mb-4">Data Retention Periods</h2>
+                <p class="text-gray-600 mb-6 text-sm">
+                    While the Cybercrimes Act sets a 2-year baseline for "Traffic Data," other regulations and operational needs create varying retention landscapes. This chart compares the mandatory minimums against typical industry practices.
+                </p>
+                <div class="chart-container">
+                    <canvas id="retentionChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-b from-blue-900 to-blue-800 p-8 rounded-xl shadow-lg text-white flex flex-col justify-center">
+                <h3 class="text-2xl font-bold mb-4 text-amber-500">Key Compliance Insight</h3>
+                <p class="text-lg leading-relaxed mb-6">
+                    "Service providers shall keep all traffic data and subscriber information... for a period of <strong>2 years</strong>."
+                </p>
+                <div class="border-t border-blue-700 pt-4">
+                    <p class="font-bold text-cyan-400">Cybercrimes Act 2015</p>
+                    <p class="text-sm text-blue-200">Section 38 (1)</p>
+                </div>
+                <div class="mt-8 bg-blue-800 p-4 rounded-lg">
+                    <p class="text-sm text-gray-300">
+                        <strong class="text-white">Note:</strong> After the retention period, data must be destroyed or anonymized unless a specific "Preservation Order" is received from a Law Enforcement Agency.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAWFUL INTERCEPTION FLOWCHART -->
+        <section class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border-t-8 border-emerald-500">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">The Lawful Interception Protocol</h2>
+            <p class="text-gray-600 mb-8 max-w-3xl">
+                Access to CDRs by third parties (Police, EFCC, DSS) is not automatic. It must follow strict due process to satisfy both the NCC Guidelines and the NDPA.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center">
+                
+                <!-- Step 1 -->
+                <div class="w-full md:w-1/5">
+                    <div class="bg-emerald-100 border-2 border-emerald-500 p-4 rounded-lg shadow-sm h-32 flex items-center justify-center flex-col">
+                        <span class="text-3xl mb-2">👮</span>
+                        <h4 class="font-bold text-emerald-900">Request Initiated</h4>
+                        <p class="text-xs text-emerald-700">LEA Officer requires evidence</p>
+                    </div>
+                </div>
+
+                <div class="flow-arrow md:transform md:-rotate-90 md:mx-2"></div>
+
+                <!-- Step 2 -->
+                <div class="w-full md:w-1/5">
+                    <div class="bg-white border-2 border-gray-300 p-4 rounded-lg shadow-sm h-32 flex items-center justify-center flex-col">
+                        <span class="text-3xl mb-2">⚖️</span>
+                        <h4 class="font-bold text-gray-900">Judicial Warrant</h4>
+                        <p class="text-xs text-gray-600">Must be signed by a Judge/Magistrate</p>
+                    </div>
+                </div>
+
+                <div class="flow-arrow md:transform md:-rotate-90 md:mx-2"></div>
+
+                <!-- Step 3 -->
+                <div class="w-full md:w-1/5">
+                    <div class="bg-blue-50 border-2 border-blue-500 p-4 rounded-lg shadow-sm h-32 flex items-center justify-center flex-col">
+                        <span class="text-3xl mb-2">🏢</span>
+                        <h4 class="font-bold text-blue-900">MTN Validation</h4>
+                        <p class="text-xs text-blue-700">Legal Team verifies warrant authenticity</p>
+                    </div>
+                </div>
+
+                <div class="flow-arrow md:transform md:-rotate-90 md:mx-2"></div>
+
+                <!-- Step 4 -->
+                <div class="w-full md:w-1/5">
+                    <div class="bg-amber-50 border-2 border-amber-500 p-4 rounded-lg shadow-sm h-32 flex items-center justify-center flex-col">
+                        <span class="text-3xl mb-2">💾</span>
+                        <h4 class="font-bold text-amber-900">Data Release</h4>
+                        <p class="text-xs text-amber-800">CDR extracted securely & shared</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-red-50 p-4 rounded-lg border border-red-200">
+                <p class="text-red-800 text-sm font-semibold text-center">
+                    ⚠️ Critical: Releasing CDRs without a valid warrant is a breach of the NDPA and the Consumer Code, liable to heavy fines (up to 2% of annual gross revenue).
+                </p>
+            </div>
+        </section>
+
+        <!-- RISK RADAR -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="chart-container">
+                <canvas id="riskRadarChart"></canvas>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-blue-900 mb-4">Compliance Risk Profile</h2>
+                <p class="text-gray-600 mb-4">
+                    Managing CDRs involves balancing conflicting pressures. The Radar chart visualizes the intensity of regulatory pressure across key domains.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mt-1.5 mr-3 flex-shrink-0"></div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Timeliness (High Pressure)</h4>
+                            <p class="text-sm text-gray-600">LEAs often demand "immediate" access for active investigations (e.g., kidnappings), putting operational pressure on validation teams.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full mt-1.5 mr-3 flex-shrink-0"></div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Data Privacy (High Pressure)</h4>
+                            <p class="text-sm text-gray-600">NDPA requires strict access controls. Unauthorized employee access to CDRs is a major compliance risk.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-amber-500 rounded-full mt-1.5 mr-3 flex-shrink-0"></div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Retention Cost (Medium Pressure)</h4>
+                            <p class="text-sm text-gray-600">Storing petabytes of CDR logs for 2 years incurs significant storage infrastructure costs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCLUSION -->
+        <footer class="bg-gray-800 text-gray-300 py-12 rounded-t-2xl">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h2 class="text-2xl font-bold text-white mb-6">Executive Takeaway</h2>
+                <p class="text-lg mb-8 leading-relaxed">
+                    MTN Nigeria operates in a high-stakes environment where CDRs are central to national security and privacy. Compliance requires a rigorous <strong>2-year retention strategy</strong>, a robust <strong>Warrant Validation Process</strong>, and strict adherence to <strong>NDPA security standards</strong> to avoid penalties and reputational damage.
+                </p>
+                <div class="text-sm text-gray-500">
+                    <p>© 2023 MTN Nigeria Regulatory Affairs Internal Briefing Tool.</p>
+                    <p class="mt-2">Generated for educational purposes based on: Cybercrimes Act 2015, NDPA 2023, NCA 2003.</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Utility: Wrap text for Chart.js
+        const wrapText = (str, limit = 16) => {
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length < limit) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        };
+
+        // Shared Tooltip Config
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // --- Chart 1: CDR Composition (Doughnut) ---
+        const ctxCDR = document.getElementById('cdrCompositionChart').getContext('2d');
+        new Chart(ctxCDR, {
+            type: 'doughnut',
+            data: {
+                labels: ['Call Duration & Time', 'Caller ID (A-Party)', 'Receiver ID (B-Party)', 'Location (Cell ID)', 'Device Info (IMEI)'],
+                datasets: [{
+                    data: [30, 20, 20, 15, 15],
+                    backgroundColor: [
+                        '#1e3a8a', // Blue 900
+                        '#0ea5e9', // Sky 500
+                        '#06b6d4', // Cyan 500
+                        '#f59e0b', // Amber 500
+                        '#64748b'  // Slate 500
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' },
+                    tooltip: commonTooltipConfig,
+                    title: {
+                        display: true,
+                        text: 'Metadata Fields in a CDR'
+                    }
+                }
+            }
+        });
+
+        // --- Chart 2: Retention Periods (Bar) ---
+        // Processing long labels
+        const retentionLabels = [
+            'Cybercrimes Act (Traffic Data)', 
+            'General Business (Financials)', 
+            'Consumer Complaints Logs', 
+            'Failed Call Attempts'
+        ].map(l => wrapText(l));
+
+        const ctxRetention = document.getElementById('retentionChart').getContext('2d');
+        new Chart(ctxRetention, {
+            type: 'bar',
+            data: {
+                labels: retentionLabels,
+                datasets: [{
+                    label: 'Retention Period (Years)',
+                    data: [2, 6, 1, 0.5], // 2 years, 6 years (Tax), 1 year (NCC guideline), 6 months (Operational)
+                    backgroundColor: [
+                        '#f59e0b', // Amber (Critical/Focus)
+                        '#94a3b8', // Gray
+                        '#cbd5e1', // Light Gray
+                        '#e2e8f0'  // Lighter Gray
+                    ],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Years' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+
+        // --- Chart 3: Risk Radar ---
+        const riskLabels = ['Data Privacy (NDPA)', 'Cyber Security', 'Lawful Interception', 'Data Retention', 'Consumer Rights'].map(l => wrapText(l));
+
+        const ctxRadar = document.getElementById('riskRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: riskLabels,
+                datasets: [{
+                    label: 'Regulatory Pressure Intensity',
+                    data: [90, 85, 95, 70, 60], // Hypothetical scores out of 100
+                    fill: true,
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)', // Cyan transparent
+                    borderColor: '#06b6d4',
+                    pointBackgroundColor: '#1e3a8a',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#1e3a8a'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: '#e5e7eb' },
+                        grid: { color: '#e5e7eb' },
+                        pointLabels: {
+                            font: { size: 12, weight: 'bold' }
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+    </script>
+</body>
+</html>
